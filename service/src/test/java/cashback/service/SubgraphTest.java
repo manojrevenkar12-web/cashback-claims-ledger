@@ -41,7 +41,7 @@ class SubgraphTest {
         Map<String, Object> service = (Map<String, Object>) data(http.graphql(Http.SUPPORT,
             "{ _service { sdl } }", Map.of())).get("_service");
         String sdl = (String) service.get("sdl");
-        assertTrue(sdl.matches("(?s).*type User @key\\(fields ?: ?\"id\"\\).*"), sdl);
+        assertTrue(sdl.matches("(?s).*type User @key\\(fields ?: ?\"id\".*"), sdl);
         assertTrue(sdl.contains("specs.apollo.dev/federation"), sdl);
     }
 

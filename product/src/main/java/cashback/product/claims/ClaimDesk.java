@@ -165,10 +165,10 @@ public final class ClaimDesk {
             : "left out: " + String.join(", ", excluded)));
 
         if (cashback >= supportAboveCashbackCents) {
-            checks.add(new Check("amount", false, "cashback of " + cashback + " cents needs a person's approval"));
+            checks.add(new Check("amount", false, euros(cashback) + " cashback needs a person's approval"));
             return new Decision(Outcome.SUPPORT, "high_value", r.orderId(), r, eligibleCents, cashback, checks, reads);
         }
-        checks.add(new Check("amount", true, cashback + " cents cashback on " + eligibleCents + " cents"));
+        checks.add(new Check("amount", true, euros(cashback) + " cashback on " + euros(eligibleCents)));
         return new Decision(Outcome.FILE, "eligible", r.orderId(), r, eligibleCents, cashback, checks, reads);
     }
 
@@ -177,6 +177,11 @@ public final class ClaimDesk {
             long before = ChronoUnit.DAYS.between(day(c.atMillis()), orderDate);
             return before >= 0 && before <= merchant.cookieDays();
         }).max((x, y) -> Long.compare(x.atMillis(), y.atMillis()));
+    }
+
+    /** 6328 cents is "63.28 EUR": the checks are read by people. */
+    static String euros(long cents) {
+        return String.format(Locale.ROOT, "%d.%02d EUR", cents / 100, cents % 100);
     }
 
     private static LocalDate day(long millis) {

@@ -39,7 +39,7 @@ export function ReportTables({ report }: { report: Report }) {
                 <th scope="row">{d.label}</th>
                 <td>
                   <span className={styles.bar}>
-                    <span className={styles.fill} style={{ inlineSize: percent(d.rightShare) }} />
+                    <span className={styles.fill} style={{ inlineSize: `${d.rightShare * 100}%` }} />
                   </span>
                   {percent(d.rightShare)}
                 </td>
@@ -61,7 +61,7 @@ export function ReportTables({ report }: { report: Report }) {
           <tr>
             <th scope="col">Consumer</th>
             <th scope="col">Users exact to the cent</th>
-            <th scope="col">Cents off in total</th>
+            <th scope="col">Off in total</th>
             <th scope="col">Rewards in the wrong state</th>
           </tr>
         </thead>
