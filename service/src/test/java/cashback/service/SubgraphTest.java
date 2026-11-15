@@ -41,7 +41,7 @@ class SubgraphTest {
         Map<String, Object> service = (Map<String, Object>) data(http.graphql(Http.SUPPORT,
             "{ _service { sdl } }", Map.of())).get("_service");
         String sdl = (String) service.get("sdl");
-        assertTrue(sdl.contains("@key(fields: \"id\")"), sdl);
+        assertTrue(sdl.matches("(?s).*type User @key\\(fields ?: ?\"id\"\\).*"), sdl);
         assertTrue(sdl.contains("specs.apollo.dev/federation"), sdl);
     }
 
@@ -56,7 +56,9 @@ class SubgraphTest {
         String query = "query($r: [_Any!]!) { _entities(representations: $r) { ... on User { id "
             + "cashback { pendingCents confirmedCents availableCents rewards { id status cashbackCents } } } } }";
         Map<String, Object> vars = Map.of("r", List.of(Map.of("__typename", "User", "id", "u-demo")));
-        List<Object> entities = (List<Object>) data(http.graphql(Http.SHOPPER, query, vars)).get("_entities");
+        Http.Reply reply = http.graphql(Http.SHOPPER, query, vars);
+        List<Object> entities = (List<Object>) data(reply).get("_entities");
+        assertNotNull(entities.get(0), Json.compact(reply.body()));
         Map<String, Object> user = (Map<String, Object>) entities.get(0);
         Map<String, Object> cashback = (Map<String, Object>) user.get("cashback");
         assertEquals("u-demo", user.get("id"));

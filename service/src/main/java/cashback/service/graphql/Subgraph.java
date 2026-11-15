@@ -29,7 +29,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class Subgraph {
 
-    public record UserRef(String id) {
+    /** Named User so the federation type resolver, which goes by class name, maps it to the entity. */
+    public record User(String id) {
     }
 
     public record Account(int pendingCents, int confirmedCents, int paidOutCents, int availableCents, int owedCents,
@@ -56,12 +57,12 @@ public class Subgraph {
     }
 
     @EntityMapping
-    public UserRef user(@Argument("id") String id) {
-        return new UserRef(id);
+    public User user(@Argument("id") String id) {
+        return new User(id);
     }
 
     @SchemaMapping(typeName = "User", field = "cashback")
-    public Account cashback(UserRef user, graphql.GraphQLContext context) {
+    public Account cashback(User user, graphql.GraphQLContext context) {
         caller(context).mayAct(user.id());
         Ledger.Balance b = ledger.balance(user.id(), System.currentTimeMillis());
         List<RewardView> rewards = new ArrayList<>();
@@ -75,7 +76,7 @@ public class Subgraph {
     }
 
     @SchemaMapping(typeName = "User", field = "claims")
-    public List<ClaimView> userClaims(UserRef user, graphql.GraphQLContext context) {
+    public List<ClaimView> userClaims(User user, graphql.GraphQLContext context) {
         caller(context).mayAct(user.id());
         return claims.list(null).stream().filter(c -> c.ticket().userId().equals(user.id())).map(Subgraph::view)
             .toList();
