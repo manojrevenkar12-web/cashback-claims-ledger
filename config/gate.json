@@ -1,0 +1,18 @@
+{
+  "_about": "Set before any result was seen. The desk ships only if every line holds on dev, and the held-out world is judged by the same lines. Never moved after the held-out run.",
+  "claims": {
+    "design": "desk",
+    "minRight": 0.95,
+    "maxInvalidFiledShare": 0.03,
+    "maxWrongAmountShareOfFiled": 0.005,
+    "maxLate": 0,
+    "maxSupportHoursShareOfSupportAll": 0.3,
+    "mustBeat": ["support_all", "llm_alone", "rules_alone"]
+  },
+  "ledger": {
+    "design": "ledger",
+    "minUsersExact": 1.0,
+    "maxCentsOff": 0,
+    "maxWrongStatus": 0
+  }
+}

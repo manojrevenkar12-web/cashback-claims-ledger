@@ -1,0 +1,47 @@
+{
+  "_about": "Published programme terms. Merchants, affiliate networks and the platform all agree on these, so both the simulated world and the product read this file. Every merchant, network and code here is fictional.",
+  "networks": [
+    {"id": "tidewater", "name": "Tidewater Affiliates"},
+    {"id": "lagoon", "name": "Lagoon Partners"},
+    {"id": "reefline", "name": "Reefline Network"}
+  ],
+  "rules": {
+    "_about": "Cashback is paid on the order value of eligible items after discounts, excluding shipping. A discount is spread over the items in proportion to their value, rounded down to the cent for the eligible part. Cashback is rounded down to the cent.",
+    "rounding": "floor"
+  },
+  "merchants": [
+    {"id": "m-nordlicht", "name": "Nordlicht Mode", "aliases": ["nordlicht", "nordlicht mode gmbh"], "locale": "de", "dateOrder": "dmy", "network": "tidewater", "cashbackBp": 800, "cookieDays": 30, "claimAfterDays": 7, "claimWithinDays": 90, "excluded": ["gift_card"], "platformVouchers": ["SHOOP10", "NORD15"]},
+    {"id": "m-kaffeewerk", "name": "Kaffeewerk", "aliases": ["kaffeewerk", "kaffeewerk.de"], "locale": "de", "dateOrder": "dmy", "network": "lagoon", "cashbackBp": 500, "cookieDays": 7, "claimAfterDays": 3, "claimWithinDays": 60, "excluded": ["gift_card", "subscription"], "platformVouchers": ["BOHNE5"]},
+    {"id": "m-fahrradladen", "name": "Fahrradladen Berg", "aliases": ["fahrradladen", "fahrradladen berg"], "locale": "de", "dateOrder": "dmy", "network": "reefline", "cashbackBp": 400, "cookieDays": 14, "claimAfterDays": 10, "claimWithinDays": 120, "excluded": ["gift_card"], "platformVouchers": []},
+    {"id": "m-wohnzimmer", "name": "Wohnzimmer24", "aliases": ["wohnzimmer24", "wohnzimmer 24"], "locale": "de", "dateOrder": "dmy", "network": "tidewater", "cashbackBp": 600, "cookieDays": 30, "claimAfterDays": 7, "claimWithinDays": 90, "excluded": ["gift_card", "service"], "platformVouchers": ["WOHN20"]},
+    {"id": "m-apotheke", "name": "Lindenapotheke Online", "aliases": ["lindenapotheke", "lindenapotheke online"], "locale": "de", "dateOrder": "dmy", "network": "lagoon", "cashbackBp": 300, "cookieDays": 1, "claimAfterDays": 3, "claimWithinDays": 45, "excluded": ["gift_card", "prescription"], "platformVouchers": []},
+    {"id": "m-technikhaus", "name": "Technikhaus", "aliases": ["technikhaus", "technikhaus.de"], "locale": "de", "dateOrder": "dmy", "network": "reefline", "cashbackBp": 200, "cookieDays": 7, "claimAfterDays": 7, "claimWithinDays": 90, "excluded": ["gift_card", "service"], "platformVouchers": ["TECH5"]},
+    {"id": "m-clairet", "name": "Maison Clairet", "aliases": ["maison clairet", "clairet"], "locale": "fr", "dateOrder": "dmy", "network": "tidewater", "cashbackBp": 700, "cookieDays": 30, "claimAfterDays": 7, "claimWithinDays": 90, "excluded": ["gift_card"], "platformVouchers": ["IGRAAL10"]},
+    {"id": "m-boulangerie", "name": "Le Fournil Direct", "aliases": ["le fournil", "le fournil direct", "fournil"], "locale": "fr", "dateOrder": "dmy", "network": "lagoon", "cashbackBp": 450, "cookieDays": 7, "claimAfterDays": 3, "claimWithinDays": 60, "excluded": ["gift_card", "subscription"], "platformVouchers": []},
+    {"id": "m-voyages", "name": "Voyages Azur", "aliases": ["voyages azur", "azur"], "locale": "fr", "dateOrder": "dmy", "network": "reefline", "cashbackBp": 350, "cookieDays": 30, "claimAfterDays": 14, "claimWithinDays": 180, "excluded": ["gift_card", "insurance"], "platformVouchers": ["AZUR25"]},
+    {"id": "m-jardin", "name": "Jardin Facile", "aliases": ["jardin facile"], "locale": "fr", "dateOrder": "dmy", "network": "tidewater", "cashbackBp": 550, "cookieDays": 14, "claimAfterDays": 7, "claimWithinDays": 90, "excluded": ["gift_card"], "platformVouchers": []},
+    {"id": "m-mercado", "name": "Mercado Sol", "aliases": ["mercado sol", "mercadosol"], "locale": "es", "dateOrder": "dmy", "network": "lagoon", "cashbackBp": 600, "cookieDays": 30, "claimAfterDays": 7, "claimWithinDays": 90, "excluded": ["gift_card"], "platformVouchers": ["SOL10"]},
+    {"id": "m-zapatos", "name": "Zapatería Ola", "aliases": ["zapateria ola", "zapatería ola", "ola"], "locale": "es", "dateOrder": "dmy", "network": "reefline", "cashbackBp": 900, "cookieDays": 14, "claimAfterDays": 7, "claimWithinDays": 60, "excluded": ["gift_card"], "platformVouchers": []},
+    {"id": "m-brightcart", "name": "Brightcart", "aliases": ["brightcart", "brightcart eu"], "locale": "en", "dateOrder": "mdy", "network": "tidewater", "cashbackBp": 400, "cookieDays": 7, "claimAfterDays": 7, "claimWithinDays": 90, "excluded": ["gift_card", "subscription"], "platformVouchers": ["BRIGHT10"]},
+    {"id": "m-pixelhub", "name": "PixelHub Games", "aliases": ["pixelhub", "pixelhub games"], "locale": "en", "dateOrder": "mdy", "network": "lagoon", "cashbackBp": 300, "cookieDays": 1, "claimAfterDays": 3, "claimWithinDays": 30, "excluded": ["gift_card", "subscription"], "platformVouchers": []},
+    {"id": "m-harbour", "name": "Harbour Books", "aliases": ["harbour books", "harbour"], "locale": "en", "dateOrder": "dmy", "network": "reefline", "cashbackBp": 650, "cookieDays": 30, "claimAfterDays": 7, "claimWithinDays": 90, "excluded": ["gift_card"], "platformVouchers": ["HARBOUR5"]},
+    {"id": "m-sportwelt", "name": "Sportwelt", "aliases": ["sportwelt", "sportwelt.de"], "locale": "de", "dateOrder": "dmy", "network": "tidewater", "cashbackBp": 750, "cookieDays": 30, "claimAfterDays": 7, "claimWithinDays": 90, "excluded": ["gift_card"], "platformVouchers": ["SPORT10"]}
+  ],
+  "offers": [
+    {"_about": "Card-linked in-store offers. Cashback is earned on the cleared amount less refunds, if that is at least the minimum spend, capped per transaction. It is confirmed once the hold (the return window) has passed after clearing; an authorisation that never clears expires.",
+     "id": "o-kaffeewerk-store", "merchantId": "m-kaffeewerk", "cashbackBp": 1000, "minSpendCents": 500, "maxCashbackCents": 500, "holdDays": 14, "authExpiryDays": 7},
+    {"id": "o-sportwelt-store", "merchantId": "m-sportwelt", "cashbackBp": 500, "minSpendCents": 3000, "maxCashbackCents": 2500, "holdDays": 30, "authExpiryDays": 7},
+    {"id": "o-technikhaus-store", "merchantId": "m-technikhaus", "cashbackBp": 200, "minSpendCents": 10000, "maxCashbackCents": 3000, "holdDays": 30, "authExpiryDays": 7},
+    {"id": "o-fournil-store", "merchantId": "m-boulangerie", "cashbackBp": 1500, "minSpendCents": 300, "maxCashbackCents": 300, "holdDays": 7, "authExpiryDays": 5},
+    {"id": "o-mercado-store", "merchantId": "m-mercado", "cashbackBp": 400, "minSpendCents": 2000, "maxCashbackCents": 1000, "holdDays": 14, "authExpiryDays": 7},
+    {"id": "o-nordlicht-store", "merchantId": "m-nordlicht", "cashbackBp": 600, "minSpendCents": 4000, "maxCashbackCents": 2000, "holdDays": 30, "authExpiryDays": 7}
+  ],
+  "categories": {
+    "_about": "Words on an order line that put it in a category the terms can exclude. Matched on whole words, case and accents ignored. Lines that match nothing are standard items.",
+    "gift_card": ["gift card", "giftcard", "geschenkkarte", "geschenkgutschein", "wertgutschein", "carte cadeau", "e-carte cadeau", "tarjeta regalo", "cheque regalo"],
+    "subscription": ["abo", "abonnement", "subscription", "suscripcion", "monthly plan", "jahresabo"],
+    "service": ["montage", "installation", "aufbauservice", "garantieverlangerung", "warranty extension"],
+    "prescription": ["rezept", "verschreibungspflichtig", "prescription"],
+    "insurance": ["assurance", "insurance", "annulation"]
+  }
+}

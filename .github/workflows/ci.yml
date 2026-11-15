@@ -1,0 +1,94 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  java:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Compile and test every module
+        run: ./gradlew build --no-daemon
+      - name: The report, the gate, the README and the demo seed agree with the code
+        run: |
+          ./gradlew :eval:evaluate :eval:gate :eval:readme :eval:seed --no-daemon -q
+          git diff --exit-code reports/dev.json README.md demo/seed.json
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: cb
+          POSTGRES_PASSWORD: cb
+          POSTGRES_DB: cb
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U cb" --health-interval 5s --health-timeout 5s --health-retries 20
+      dynamodb:
+        image: amazon/dynamodb-local:latest
+        ports: ['8000:8000']
+      sqs:
+        image: softwaremill/elasticmq-native:latest
+        ports: ['9324:9324']
+    env:
+      CASHBACK_TEST_DATABASE_URL: postgres://cb:cb@localhost:5432/cb
+      CASHBACK_TEST_DYNAMODB_ENDPOINT: http://localhost:8000
+      CASHBACK_TEST_SQS_ENDPOINT: http://localhost:9324
+      CASHBACK_TEST_SQS_QUEUE_URL: http://localhost:9324/000000000000/cashback-facts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Stores keep the contract on Postgres and DynamoDB, and SQS delivery is applied once
+        run: ./gradlew :service:test --no-daemon --tests 'cashback.service.StoreContractTest' --tests 'cashback.service.SqsTest'
+      - name: The service runs on Postgres claims and a DynamoDB ledger
+        run: |
+          ./gradlew :service:bootJar --no-daemon -q
+          DATABASE_URL=$CASHBACK_TEST_DATABASE_URL CASHBACK_STORE=dynamodb DYNAMODB_ENDPOINT=$CASHBACK_TEST_DYNAMODB_ENDPOINT \
+            DYNAMODB_CREATE_TABLE=true PORT=8790 java -jar service/build/libs/cashback-claims-ledger.jar &
+          for i in $(seq 1 90); do curl -sf localhost:8790/actuator/health/readiness && break; sleep 2; done
+          curl -sf -H 'X-Api-Key: support-demo-key' 'localhost:8790/api/claims?status=NEEDS_SUPPORT' | python3 -c "import json,sys; d=json.load(sys.stdin); n=sum(d['counts'].values()); print(n, 'claims on Postgres'); assert n > 30"
+          curl -sf -H 'X-Api-Key: shopper-demo-key' localhost:8790/api/users/u-demo/account | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d['rewards']), 'rewards from DynamoDB'); assert d['rewards']"
+
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t cashback-claims-ledger .
+      - name: The image serves the console, the API, the subgraph and metrics
+        run: |
+          docker run -d -p 8790:8790 --name cb cashback-claims-ledger
+          for i in $(seq 1 90); do curl -sf localhost:8790/actuator/health/readiness && break; sleep 2; done
+          curl -sf localhost:8790/ | grep -q '<div id="root">'
+          curl -sf -H 'X-Api-Key: support-demo-key' localhost:8790/api/claims > /dev/null
+          curl -sf -H 'X-Api-Key: support-demo-key' -H 'content-type: application/json' \
+            -d '{"query":"{ _service { sdl } }"}' localhost:8790/graphql | grep -q '@key'
+          curl -sf localhost:8790/actuator/prometheus | grep -q http_server_requests_seconds_count

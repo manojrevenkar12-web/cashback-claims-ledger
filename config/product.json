@@ -1,0 +1,29 @@
+{
+  "_about": "The product's own settings. The simulated world never reads this file.",
+  "claims": {
+    "maxReads": 3,
+    "supportAboveCashbackCents": 4000,
+    "_supportAbove": "A person approves any claim whose cashback is 40 EUR or more before it goes to a network.",
+    "amountToleranceCents": 0
+  },
+  "ledger": {
+    "payoutThresholdCents": 1000,
+    "maxWriteRetries": 50
+  },
+  "model": {
+    "name": "claude-sonnet-5-5",
+    "maxTokens": 1500,
+    "apiUrl": "https://api.anthropic.com/v1/messages"
+  },
+  "apiKeys": [
+    {"key": "support-demo-key", "actor": "support:demo", "role": "support"},
+    {"key": "shopper-demo-key", "actor": "shopper:u-demo", "role": "shopper"}
+  ],
+  "networkSecrets": {
+    "_about": "Webhook signing secrets for the demo only. In production each comes from the environment (CASHBACK_SECRET_<NETWORK>), which overrides these.",
+    "tidewater": "demo-tidewater-secret",
+    "lagoon": "demo-lagoon-secret",
+    "reefline": "demo-reefline-secret",
+    "card": "demo-card-secret"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "_about": "What each design costs in support time, and the team it has. Minutes are per claim a person handles.",
+  "supportMinutesPerDay": 150,
+  "slaDays": 7,
+  "designs": {
+    "support_all": {"label": "Support agents decide every claim", "minutesPerClaim": 9},
+    "rules_alone": {"label": "Rules on the shopper's form, no reading", "minutesPerSupportCase": 9},
+    "llm_alone": {"label": "A model reads and decides alone", "minutesPerSupportCase": 9},
+    "desk": {"label": "Model reads, code decides, a person takes the rest", "minutesPerSupportCase": 6}
+  },
+  "ledgerDesigns": {
+    "arrival_order": "Apply each event as it arrives",
+    "dedupe_only": "Drop repeated event ids, then apply in arrival order",
+    "ledger": "Keep every fact, compute the reward from the set"
+  }
+}

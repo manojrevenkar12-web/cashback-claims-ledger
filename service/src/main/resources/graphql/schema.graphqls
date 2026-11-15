@@ -1,0 +1,57 @@
+# The cashback subgraph. Other subgraphs own User; this one adds the shopper's cashback to it, so the supergraph
+# can answer "what does this shopper have and what happened to their claims" in one query.
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@key", "@shareable"])
+
+type Query {
+  "A claim by id (support only)."
+  claim(id: ID!): Claim
+  "Claims in one status, oldest first (support only)."
+  claims(status: ClaimStatus): [Claim!]!
+}
+
+type User @key(fields: "id") {
+  id: ID!
+  cashback: CashbackAccount!
+  claims: [Claim!]!
+}
+
+type CashbackAccount {
+  pendingCents: Int!
+  confirmedCents: Int!
+  paidOutCents: Int!
+  availableCents: Int!
+  owedCents: Int!
+  rewards: [Reward!]!
+}
+
+type Reward {
+  id: ID!
+  kind: RewardKind!
+  merchantId: String!
+  status: RewardStatus!
+  cashbackCents: Int!
+  reason: String!
+}
+
+enum RewardKind { ONLINE IN_STORE }
+enum RewardStatus { PENDING CONFIRMED DECLINED }
+
+type Claim {
+  id: ID!
+  userId: ID!
+  merchantId: String!
+  status: ClaimStatus!
+  outcome: String!
+  reason: String!
+  eligibleCents: Int!
+  cashbackCents: Int!
+  checks: [Check!]!
+}
+
+type Check {
+  name: String!
+  passed: Boolean!
+  detail: String!
+}
+
+enum ClaimStatus { FILING FILED ANSWERED WAITING REJECTED NEEDS_SUPPORT }

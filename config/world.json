@@ -1,0 +1,96 @@
+{
+  "_about": "The simulated world: shoppers, orders, networks, card schemes, claimants, a support person and two model stand-ins. Only src of the world module reads this file. Rates are per order, per claim or per read as named.",
+  "seed": "dev-2026-11",
+  "start": "2026-05-01",
+  "days": 150,
+  "shoppers": 6000,
+  "cardLinkedShare": 0.35,
+  "ordersPerShopperMean": 2.4,
+  "storeVisitsPerCardShopperMean": 3.0,
+  "orders": {
+    "clickedThroughPlatform": 0.93,
+    "clickSameDay": 0.82,
+    "clickTooOldShare": 0.05,
+    "linesMin": 1,
+    "linesMax": 4,
+    "giftCardLine": 0.06,
+    "specialLine": 0.04,
+    "platformVoucher": 0.12,
+    "foreignVoucher": 0.08,
+    "shippingCharged": 0.55,
+    "lineCentsMin": 799,
+    "lineCentsMax": 18999
+  },
+  "networks": {
+    "_about": "trackingLoss: share of orders whose tracking breaks (blocked cookies, app switches). reportHoursMax stays below every claimAfterDays, as the terms promise.",
+    "trackingLoss": {"tidewater": 0.10, "lagoon": 0.14, "reefline": 0.18},
+    "reportHoursMax": 40,
+    "adjustShare": 0.06,
+    "declineShare": 0.11,
+    "approvalDaysMin": 25,
+    "approvalDaysMax": 55,
+    "reversalShare": 0.02,
+    "approveValidClaim": 0.94
+  },
+  "delivery": {
+    "_about": "How events reach us: delays, duplicates and whole-history replays.",
+    "delayHoursMean": 3.0,
+    "longDelayShare": 0.06,
+    "longDelayDaysMean": 4.0,
+    "duplicateShare": 0.09,
+    "replayShare": 0.03
+  },
+  "card": {
+    "clearingShare": 0.96,
+    "clearingDaysMax": 3,
+    "clearingDiffersShare": 0.15,
+    "refundShare": 0.07,
+    "refundDaysMax": 25,
+    "fullRefundShare": 0.4,
+    "amountCentsMin": 250,
+    "amountCentsMax": 24000
+  },
+  "claims": {
+    "_about": "Who files a missing-cashback claim, and when. Days after the order follow an exponential with the mean, from the minimum.",
+    "untrackedFiles": 0.62,
+    "trackedFilesAnyway": 0.025,
+    "noClickFiles": 0.35,
+    "daysAfterMin": 1,
+    "daysAfterMean": 16,
+    "lateShare": 0.04,
+    "fraudCopies": 0.012,
+    "fraudsterClicked": 0.25,
+    "wrongMerchant": 0.015,
+    "form": {"orderIdTypo": 0.07, "dateWrong": 0.12, "amountIsTotal": 0.78}
+  },
+  "reader": {
+    "_about": "The model stand-in that reads confirmations. Errors are drawn per claim and attempt. Hard documents (bad scans, mangled pastes) misread far more often.",
+    "failShare": 0.01,
+    "hardShare": 0.04,
+    "hardErrorShare": 0.55,
+    "lineAmount": 0.025,
+    "total": 0.012,
+    "dropVoucherLine": 0.015,
+    "orderIdDigit": 0.02,
+    "dateSwap": 0.015,
+    "dropCategoryWord": 0.008
+  },
+  "judge": {
+    "_about": "The model alone deciding claims: how often it gets each kind of claim wrong.",
+    "validWronglyRejected": 0.08,
+    "noClickFiled": 0.35,
+    "foreignVoucherFiled": 0.5,
+    "excludedFiledWhole": 0.45,
+    "tooLateFiled": 0.2,
+    "tooEarlyFiled": 0.3,
+    "alreadyTrackedFiled": 0.25,
+    "fraudFiled": 0.8,
+    "wrongMerchantFiled": 0.6,
+    "amountWrong": 0.07
+  },
+  "person": {
+    "_about": "A support person deciding a claim with all the evidence in front of them.",
+    "accuracy": 0.965,
+    "amountAccuracy": 0.97
+  }
+}
