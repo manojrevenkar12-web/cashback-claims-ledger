@@ -1,0 +1,210 @@
+{
+  "world": {
+    "name": "heldout",
+    "seed": "heldout-2026-11",
+    "from": "2026-01-12",
+    "to": "2026-06-10",
+    "shoppers": 5000,
+    "merchants": 16,
+    "onlineOrders": 12080,
+    "trackedOrders": 9032,
+    "cardTransactions": 5154,
+    "claims": 1735,
+    "claimTruths": {
+      "too_early": 384,
+      "fraud": 179,
+      "eligible": 553,
+      "no_qualifying_click": 292,
+      "already_tracked": 202,
+      "other_merchant": 19,
+      "foreign_voucher": 58,
+      "excluded_items": 12,
+      "too_late": 36
+    }
+  },
+  "claims": {
+    "designs": {
+      "support_all": {
+        "label": "Support agents decide every claim",
+        "claims": 1735,
+        "right": 1656,
+        "rightShare": 0.9545,
+        "filed": 573,
+        "invalidFiled": 48,
+        "invalidFiledShare": 0.0838,
+        "wrongAmounts": 3,
+        "wrongAmountShareOfFiled": 0.0052,
+        "validDeniedCents": 85023,
+        "recoveredCents": 1153885,
+        "recoverableCents": 1310904,
+        "recoveredShare": 0.8802,
+        "supportCases": 1735,
+        "supportHours": 260.3,
+        "late": 0,
+        "p90AnswerDays": 0,
+        "maxAnswerDays": 1,
+        "wrongBy": {
+          "eligible -> REJECT": 28,
+          "no_qualifying_click -> FILE": 13,
+          "too_early -> FILE": 13,
+          "already_tracked -> FILE": 9,
+          "fraud -> FILE": 9,
+          "eligible -> FILE wrong amount": 3,
+          "too_late -> FILE": 2,
+          "excluded_items -> FILE": 1,
+          "other_merchant -> FILE": 1
+        }
+      },
+      "rules_alone": {
+        "label": "Rules on the shopper's form, no reading",
+        "claims": 1735,
+        "right": 1211,
+        "rightShare": 0.698,
+        "filed": 615,
+        "invalidFiled": 82,
+        "invalidFiledShare": 0.1333,
+        "wrongAmounts": 389,
+        "wrongAmountShareOfFiled": 0.6325,
+        "validDeniedCents": 40247,
+        "recoveredCents": 317314,
+        "recoverableCents": 1310904,
+        "recoveredShare": 0.2421,
+        "supportCases": 130,
+        "supportHours": 19.5,
+        "late": 0,
+        "p90AnswerDays": 0,
+        "maxAnswerDays": 0,
+        "wrongBy": {
+          "eligible -> FILE wrong amount": 389,
+          "foreign_voucher -> FILE": 51,
+          "no_qualifying_click -> WAIT": 14,
+          "excluded_items -> FILE": 12,
+          "eligible -> WAIT": 11,
+          "already_tracked -> FILE": 10,
+          "already_tracked -> WAIT": 10,
+          "eligible -> REJECT": 9,
+          "fraud -> FILE": 7,
+          "other_merchant -> WAIT": 7,
+          "other_merchant -> FILE": 2,
+          "already_tracked -> REJECT": 1,
+          "foreign_voucher -> WAIT": 1
+        }
+      },
+      "llm_alone": {
+        "label": "A model reads and decides alone",
+        "claims": 1735,
+        "right": 1168,
+        "rightShare": 0.6732,
+        "filed": 957,
+        "invalidFiled": 451,
+        "invalidFiledShare": 0.4713,
+        "wrongAmounts": 69,
+        "wrongAmountShareOfFiled": 0.0721,
+        "validDeniedCents": 114831,
+        "recoveredCents": 1014192,
+        "recoverableCents": 1310904,
+        "recoveredShare": 0.7737,
+        "supportCases": 0,
+        "supportHours": 0.0,
+        "late": 0,
+        "p90AnswerDays": 0,
+        "maxAnswerDays": 0,
+        "wrongBy": {
+          "fraud -> FILE": 144,
+          "too_early -> FILE": 122,
+          "no_qualifying_click -> FILE": 96,
+          "eligible -> FILE wrong amount": 69,
+          "eligible -> REJECT": 47,
+          "already_tracked -> FILE": 46,
+          "foreign_voucher -> FILE": 23,
+          "other_merchant -> FILE": 9,
+          "too_late -> FILE": 6,
+          "excluded_items -> FILE": 5
+        }
+      },
+      "desk": {
+        "label": "Model reads, code decides, a person takes the rest",
+        "claims": 1735,
+        "right": 1721,
+        "rightShare": 0.9919,
+        "filed": 556,
+        "invalidFiled": 5,
+        "invalidFiledShare": 0.009,
+        "wrongAmounts": 1,
+        "wrongAmountShareOfFiled": 0.0018,
+        "validDeniedCents": 12194,
+        "recoveredCents": 1221883,
+        "recoverableCents": 1310904,
+        "recoveredShare": 0.9321,
+        "supportCases": 174,
+        "supportHours": 17.4,
+        "late": 0,
+        "p90AnswerDays": 0,
+        "maxAnswerDays": 0,
+        "wrongBy": {
+          "already_tracked -> WAIT": 6,
+          "fraud -> FILE": 3,
+          "eligible -> REJECT": 2,
+          "eligible -> FILE wrong amount": 1,
+          "foreign_voucher -> FILE": 1,
+          "no_qualifying_click -> FILE": 1
+        },
+        "auditEntries": 2465,
+        "auditIntact": true
+      }
+    },
+    "rightShareDifference": {
+      "desk_vs_support_all": {
+        "difference": 0.0375,
+        "lo90": 0.0288,
+        "hi90": 0.0461
+      },
+      "desk_vs_rules_alone": {
+        "difference": 0.2939,
+        "lo90": 0.2761,
+        "hi90": 0.3118
+      },
+      "desk_vs_llm_alone": {
+        "difference": 0.3187,
+        "lo90": 0.2991,
+        "hi90": 0.3378
+      }
+    }
+  },
+  "ledger": {
+    "designs": {
+      "arrival_order": {
+        "users": 4444,
+        "usersExact": 3977,
+        "usersExactShare": 0.8949,
+        "rewards": 14180,
+        "wrongStatus": 534,
+        "centsOff": 284709,
+        "confirmedOverstatedCents": 998
+      },
+      "dedupe_only": {
+        "users": 4444,
+        "usersExact": 4000,
+        "usersExactShare": 0.9001,
+        "rewards": 14180,
+        "wrongStatus": 505,
+        "centsOff": 269256,
+        "confirmedOverstatedCents": 777
+      },
+      "ledger": {
+        "users": 4444,
+        "usersExact": 4444,
+        "usersExactShare": 1.0,
+        "rewards": 14180,
+        "wrongStatus": 0,
+        "centsOff": 0,
+        "confirmedOverstatedCents": 0
+      }
+    },
+    "parallelConsumers": 8,
+    "parallelIdentical": true,
+    "eventsDelivered": 31250,
+    "repeatedDeliveries": 4516,
+    "outOfOrderDeliveries": 1364
+  }
+}

@@ -95,8 +95,9 @@ final class Readme {
         }
         o.append("\nFraud that slips through is a fraudster who clicked through us before copying someone else's ")
             .append("confirmation and claimed first; nothing the platform sees tells them apart until the real shopper ")
-            .append("claims too, which sends both to a person. The rest are the support person's own mistakes on the ")
-            .append("cases the desk handed over.\n\n");
+            .append("claims too, which sends both to a person. An already-tracked claim told to wait is an order whose ")
+            .append("network report was still in a delivery delay when the claim arrived. The rest are the support ")
+            .append("person's own mistakes on the cases the desk handed over.\n\n");
 
         o.append("## Ledger consumers\n\n| consumer | shoppers exact | cents off | rewards in the wrong state |\n|---|---|---|---|\n");
         Map<String, Object> lds = (Map<String, Object>) ledger.get("designs");

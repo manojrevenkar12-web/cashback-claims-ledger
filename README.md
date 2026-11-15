@@ -9,10 +9,10 @@ REST and signed webhooks, an SQS consumer for EventBridge, DynamoDB and Postgres
 | | the desk | support decides every claim | a model alone |
 |---|---|---|---|
 | Claims decided right | **99.3%** | 96.5% | 67.4% |
-| Invalid claims sent to networks | **0.6%** | 8.1% | 50.5% |
+| Invalid claims sent to networks | **0.4%** | 8.1% | 50.5% |
 | Filed at the wrong amount | **0** | 3 | 58 |
-| Valid cashback denied | **€292.81** | €387.11 | €997.16 |
-| Support hours | **15.8** | 268.5 | 0.0 |
+| Valid cashback denied | **€330.35** | €387.11 | €997.16 |
+| Support hours | **16.2** | 268.5 | 0.0 |
 | Answered later than 7 days | **0** | 0 | 0 |
 
 | ledger, after 36,008 deliveries (3,853 repeats, 1,258 out of order) | keep facts | apply as they arrive |
@@ -22,13 +22,13 @@ REST and signed webhooks, an SQS consumer for EventBridge, DynamoDB and Postgres
 | Rewards in the wrong state | 0 | 578 |
 | 8 parallel consumers agree with one | yes | |
 
-The desk's right share is 2.9 points higher than support deciding every claim (90% interval 2.1 to 3.6, paired bootstrap over the same claims), with 5.9% of the support hours. The world: 6,000 shoppers, 14,217 online orders, 6,262 card transactions, 1,790 claims (2026-05-01 to 2026-09-27, seed `dev-2026-11`).
+The desk's right share is 2.8 points higher than support deciding every claim (90% interval 2.0 to 3.6, paired bootstrap over the same claims), with 6.0% of the support hours. The world: 6,000 shoppers, 14,217 online orders, 6,262 card transactions, 1,790 claims (2026-05-01 to 2026-09-27, seed `dev-2026-11`).
 
 ## All four claim designs
 
 | design | right | filed | invalid of filed | wrong amount | valid cashback denied | cashback recovered | support hours | late |
 |---|---|---|---|---|---|---|---|---|
-| **Model reads, code decides, a person takes the rest** | 99.3% | 513 | 0.6% | 0 | €292.81 | €11,242.64 of €12,281.19 | 15.8 | 0 |
+| **Model reads, code decides, a person takes the rest** | 99.3% | 510 | 0.4% | 0 | €330.35 | €11,224.01 of €12,281.19 | 16.2 | 0 |
 | Support agents decide every claim | 96.5% | 544 | 8.1% | 3 | €387.11 | €11,017.18 of €12,281.19 | 268.5 | 0 |
 | Rules on the shopper's form, no reading | 73.2% | 568 | 12.9% | 355 | €478.67 | €3,340.27 of €12,281.19 | 17.3 | 0 |
 | A model reads and decides alone | 67.4% | 965 | 50.5% | 58 | €997.16 | €9,550.81 of €12,281.19 | 0.0 | 0 |
@@ -39,11 +39,11 @@ Where the desk is still wrong, on dev:
 
 | truth → what the desk did | claims |
 |---|---|
-| eligible → REJECT | 6 |
+| eligible → REJECT | 8 |
 | already_tracked → WAIT | 3 |
-| fraud → FILE | 3 |
+| fraud → FILE | 2 |
 
-Fraud that slips through is a fraudster who clicked through us before copying someone else's confirmation and claimed first; nothing the platform sees tells them apart until the real shopper claims too, which sends both to a person. The rest are the support person's own mistakes on the cases the desk handed over.
+Fraud that slips through is a fraudster who clicked through us before copying someone else's confirmation and claimed first; nothing the platform sees tells them apart until the real shopper claims too, which sends both to a person. An already-tracked claim told to wait is an order whose network report was still in a delivery delay when the claim arrived. The rest are the support person's own mistakes on the cases the desk handed over.
 
 ## Ledger consumers
 
@@ -55,7 +55,18 @@ Fraud that slips through is a fraudster who clicked through us before copying so
 
 ## Held-out world
 
-Not run yet. It is run once, with the code and settings dev ended on (`./gradlew :eval:heldout`).
+A second world (seed `heldout-2026-11`, 5,000 shoppers, 1,735 claims, 2026-01-12 to 2026-06-10) with more hard scans, more fraud and noisier delivery, run once on 2026-11-15. Gate: **passed**.
+
+| design | right | filed | invalid of filed | wrong amount | valid cashback denied | cashback recovered | support hours | late |
+|---|---|---|---|---|---|---|---|---|
+| **Model reads, code decides, a person takes the rest** | 99.2% | 556 | 0.9% | 1 | €121.94 | €12,218.83 of €13,109.04 | 17.4 | 0 |
+| Support agents decide every claim | 95.5% | 573 | 8.4% | 3 | €850.23 | €11,538.85 of €13,109.04 | 260.3 | 0 |
+| Rules on the shopper's form, no reading | 69.8% | 615 | 13.3% | 389 | €402.47 | €3,173.14 of €13,109.04 | 19.5 | 0 |
+| A model reads and decides alone | 67.3% | 957 | 47.1% | 69 | €1,148.31 | €10,141.92 of €13,109.04 | 0.0 | 0 |
+
+Ledger: 100.0% of shoppers exact to the cent, €0.00 off, after 31,250 deliveries.
+
+What it showed and what changed afterwards (measured on dev only): [docs/heldout.md](docs/heldout.md).
 
 ## How a claim is decided
 

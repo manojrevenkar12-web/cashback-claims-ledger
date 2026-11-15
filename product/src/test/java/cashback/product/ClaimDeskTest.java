@@ -50,7 +50,7 @@ class ClaimDeskTest {
         // 179.80 of 204.80 is eligible; it carries 17.98 of the 20.48 voucher; 8% of 161.82 is 12.94.
         assertEquals(16182, d.eligibleCents());
         assertEquals(1294, d.cashbackCents());
-        assertEquals(1, d.reads(), "the shopper's form agreed, so one reading was enough");
+        assertEquals(2, d.reads(), "the form agreed, and a second reading confirmed the lines before money moves");
     }
 
     @Test
@@ -148,6 +148,23 @@ class ClaimDeskTest {
         Decision d = decide(t);
         assertEquals(Outcome.FILE, d.outcome());
         assertEquals(1294, d.cashbackCents(), "the amount comes from the arithmetic, not from the text");
+    }
+
+    @Test
+    void aMisreadDescriptionCannotSlipThroughOnTheFormAlone() {
+        clicks.add(new Claims.Click("k1", "u1", "m-nordlicht", at("2026-08-03", 8)));
+        ConfirmationReader blurry = (t, attempt) -> {
+            Claims.Reading r = LayoutReader.parse(t.confirmationText());
+            List<Claims.ReadLine> lines = new ArrayList<>(r.lines());
+            // Every read but the first sees the gift card; the first misreads one letter of it.
+            String gift = attempt == 1 ? "Gxschenkkarte 25 €" : lines.get(1).description();
+            lines.set(1, new Claims.ReadLine(gift, lines.get(1).amountCents()));
+            return new Claims.Reading(r.merchantName(), r.orderId(), r.orderDateText(), lines, r.voucherCode(),
+                r.discountCents(), r.shippingCents(), r.totalCents());
+        };
+        Decision d = desk(blurry).decide(nordlicht("2026-08-20"));
+        assertEquals(Outcome.SUPPORT, d.outcome(), "the first reading would have paid on the gift card");
+        assertEquals("unreadable", d.reason());
     }
 
     @Test

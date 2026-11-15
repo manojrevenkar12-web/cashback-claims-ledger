@@ -123,46 +123,46 @@
       "desk": {
         "label": "Model reads, code decides, a person takes the rest",
         "claims": 1790,
-        "right": 1778,
-        "rightShare": 0.9933,
-        "filed": 513,
-        "invalidFiled": 3,
-        "invalidFiledShare": 0.0058,
+        "right": 1777,
+        "rightShare": 0.9927,
+        "filed": 510,
+        "invalidFiled": 2,
+        "invalidFiledShare": 0.0039,
         "wrongAmounts": 0,
         "wrongAmountShareOfFiled": 0.0,
-        "validDeniedCents": 29281,
-        "recoveredCents": 1124264,
+        "validDeniedCents": 33035,
+        "recoveredCents": 1122401,
         "recoverableCents": 1228119,
-        "recoveredShare": 0.9154,
-        "supportCases": 158,
-        "supportHours": 15.8,
+        "recoveredShare": 0.9139,
+        "supportCases": 162,
+        "supportHours": 16.2,
         "late": 0,
         "p90AnswerDays": 0,
         "maxAnswerDays": 0,
         "wrongBy": {
-          "eligible -> REJECT": 6,
+          "eligible -> REJECT": 8,
           "already_tracked -> WAIT": 3,
-          "fraud -> FILE": 3
+          "fraud -> FILE": 2
         },
-        "auditEntries": 2461,
+        "auditEntries": 2462,
         "auditIntact": true
       }
     },
     "rightShareDifference": {
       "desk_vs_support_all": {
-        "difference": 0.0285,
-        "lo90": 0.0207,
-        "hi90": 0.0363
+        "difference": 0.0279,
+        "lo90": 0.0201,
+        "hi90": 0.0358
       },
       "desk_vs_rules_alone": {
-        "difference": 0.2615,
-        "lo90": 0.2447,
-        "hi90": 0.2777
+        "difference": 0.2609,
+        "lo90": 0.2436,
+        "hi90": 0.2765
       },
       "desk_vs_llm_alone": {
-        "difference": 0.319,
+        "difference": 0.3184,
         "lo90": 0.3006,
-        "hi90": 0.338
+        "hi90": 0.3374
       }
     }
   },

@@ -164,6 +164,18 @@ public final class ClaimDesk {
         checks.add(new Check("eligible items", true, excluded.isEmpty() ? "all items eligible"
             : "left out: " + String.join(", ", excluded)));
 
+        // The shopper's form vouches for the order number, date and total, not for the line descriptions that decide
+        // what is excluded. Before money moves, a second reading must agree on every line.
+        if (a.basis().startsWith("matches")) {
+            int confirmedAt = secondReading(t, r);
+            if (confirmedAt < 0) {
+                checks.add(new Check("second reading", false, "no second reading agreed on the lines"));
+                return new Decision(Outcome.SUPPORT, "unreadable", r.orderId(), r, 0, 0, checks, maxReads);
+            }
+            reads = confirmedAt;
+            checks.add(new Check("second reading", true, "a second reading agrees on every line"));
+        }
+
         if (cashback >= supportAboveCashbackCents) {
             checks.add(new Check("amount", false, euros(cashback) + " cashback needs a person's approval"));
             return new Decision(Outcome.SUPPORT, "high_value", r.orderId(), r, eligibleCents, cashback, checks, reads);
@@ -224,6 +236,20 @@ public final class ClaimDesk {
             seen.add(r);
         }
         return new ReadResult(Optional.empty(), reads);
+    }
+
+    /** Reads again until one reading equals {@code accepted}; returns the reads used, or -1. */
+    private int secondReading(Ticket t, Reading accepted) {
+        for (int attempt = 2; attempt <= maxReads; attempt++) {
+            try {
+                if (same(accepted, reader.read(t, attempt))) {
+                    return attempt;
+                }
+            } catch (ConfirmationReader.ReadFailed e) {
+                // try again
+            }
+        }
+        return -1;
     }
 
     static boolean same(Reading a, Reading b) {

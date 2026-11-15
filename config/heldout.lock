@@ -1,0 +1,6 @@
+{
+  "ranOn": "2026-11-15",
+  "configSha256": "7f170f68ac713e7806ee986493ba244684feb125ff58b2731daeff37b9b410b8",
+  "gatePassed": true,
+  "gateLines": ["pass right share                        0.9919 >= 0.95", "pass invalid share of filed             0.009 <= 0.03", "pass wrong amount share of filed        0.0018 <= 0.005", "pass late answers                       0 <= 0", "pass support hours vs support_all       0.067 <= 0.3", "pass right share beats support_all      0.9919 > 0.9545", "pass right share beats llm_alone        0.9919 > 0.6732", "pass right share beats rules_alone      0.9919 > 0.698", "pass audit chain intact                 1 >= 1", "pass ledger users exact                 1 >= 1", "pass ledger cents off                   0 <= 0", "pass ledger wrong status                0 <= 0", "pass 8 parallel consumers agree         1 >= 1", "GATE PASSED"]
+}
