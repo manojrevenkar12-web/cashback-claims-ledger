@@ -1,8 +1,6 @@
 package cashback.service;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.asyncDispatch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import cashback.common.Json;
 import java.nio.charset.StandardCharsets;
@@ -11,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 /** A small client over MockMvc that returns status and parsed JSON. */
 record Http(MockMvc mvc) {
@@ -31,7 +30,7 @@ record Http(MockMvc mvc) {
     }
 
     Reply get(String path, String key) throws Exception {
-        MockHttpServletRequestBuilder b = get(path);
+        MockHttpServletRequestBuilder b = MockMvcRequestBuilders.get(path);
         if (key != null) {
             b.header("X-Api-Key", key);
         }
@@ -39,7 +38,7 @@ record Http(MockMvc mvc) {
     }
 
     Reply post(String path, String key, Object body) throws Exception {
-        MockHttpServletRequestBuilder b = post(path).contentType(MediaType.APPLICATION_JSON)
+        MockHttpServletRequestBuilder b = MockMvcRequestBuilders.post(path).contentType(MediaType.APPLICATION_JSON)
             .content(body instanceof String s ? s : Json.compact(body));
         if (key != null) {
             b.header("X-Api-Key", key);
@@ -48,7 +47,7 @@ record Http(MockMvc mvc) {
     }
 
     Reply signed(String path, String secret, String body) throws Exception {
-        return send(post(path).contentType(MediaType.APPLICATION_JSON).content(body)
+        return send(MockMvcRequestBuilders.post(path).contentType(MediaType.APPLICATION_JSON).content(body)
             .header("X-Signature", cashback.service.web.Web.signature(secret, body)));
     }
 

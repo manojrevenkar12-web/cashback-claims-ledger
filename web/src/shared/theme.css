@@ -1,0 +1,86 @@
+/* The console's one source of colour, type, space and motion. Components use these variables only. */
+:root {
+  --paper: #f6f8f7;
+  --slip: #ffffff;
+  --ink: #13302f;
+  --teal: #1f6f6b;
+  --teal-soft: #e3efed;
+  --coin: #9a7224;
+  --coin-soft: #f6eedd;
+  --pass: #2e7d4f;
+  --pass-soft: #e5f2ea;
+  --fail: #b03a48;
+  --fail-soft: #f7e6e8;
+  --muted: #5f6e6a;
+  --rule: #d5dddb;
+  --focus: #1f6f6b;
+
+  --font-ui: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  --font-slip: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 0.9375rem;
+  --step-1: 1.125rem;
+  --step-2: 1.5rem;
+  --step-3: 2.125rem;
+  --leading: 1.5;
+  --leading-tight: 1.15;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+
+  --radius-small: 4px;
+  --radius-pill: 999px;
+  --queue-width: 20rem;
+  --decision-width: 21rem;
+  --slip-width: 36rem;
+  --measure: 68ch;
+  --tooth: 10px;
+  --hairline: 1px;
+  --rule-strong: 2px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+  line-height: var(--leading);
+  font-variation-settings: 'wdth' 100;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: var(--rule-strong) solid var(--focus);
+  outline-offset: var(--rule-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+:root {
+  --weight-strong: 640;
+  --shimmer: 1.4s;
+}

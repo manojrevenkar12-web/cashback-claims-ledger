@@ -1,0 +1,219 @@
+.view {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--decision-width);
+  grid-template-rows: auto 1fr;
+  min-block-size: 0;
+  overflow-y: auto;
+}
+.head {
+  grid-column: 1 / -1;
+  padding: var(--space-5) var(--space-6) var(--space-3);
+}
+.title {
+  margin: 0;
+  font-size: var(--step-3);
+  line-height: var(--leading-tight);
+  font-weight: var(--weight-strong);
+  letter-spacing: -0.01em;
+}
+.sub {
+  margin: var(--space-2) 0 0;
+  color: var(--muted);
+  max-inline-size: var(--measure);
+}
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, var(--slip-width)) minmax(14rem, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+  padding: var(--space-3) var(--space-6) var(--space-7);
+}
+
+/* The slip: white paper with a torn, toothed bottom edge, because it is a receipt. */
+.slip {
+  margin: 0;
+  background: var(--slip);
+  padding: var(--space-5) var(--space-5) calc(var(--space-5) + var(--tooth));
+  border: var(--hairline) solid var(--rule);
+  border-block-end: 0;
+  -webkit-mask: conic-gradient(from -45deg at bottom, transparent 90deg, #000 0) bottom / calc(2 * var(--tooth)) 51% repeat-x,
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--tooth)) no-repeat;
+  mask: conic-gradient(from -45deg at bottom, transparent 90deg, #000 0) bottom / calc(2 * var(--tooth)) 51% repeat-x,
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--tooth)) no-repeat;
+}
+.slipText {
+  margin: 0;
+  font-family: var(--font-slip);
+  font-size: var(--step--1);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.markExcluded {
+  text-decoration: line-through;
+  text-decoration-color: var(--fail);
+  color: var(--muted);
+}
+.markVoucher {
+  background: var(--coin-soft);
+}
+.slipNote {
+  margin-block-start: var(--space-4);
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+.checks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+.checkPass,
+.checkFail {
+  display: grid;
+  grid-template-columns: var(--space-5) 1fr;
+  gap: 0 var(--space-2);
+  padding-block-end: var(--space-3);
+  border-block-end: var(--hairline) solid var(--rule);
+}
+.checkMark {
+  grid-row: span 2;
+  font-weight: var(--weight-strong);
+}
+.checkPass .checkMark {
+  color: var(--pass);
+}
+.checkFail .checkMark {
+  color: var(--fail);
+}
+.checkName {
+  font-weight: var(--weight-strong);
+}
+.checkFail .checkName {
+  color: var(--fail);
+}
+.checkDetail {
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+.srOnly {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.panel {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: stretch;
+  border-inline-start: var(--hairline) solid var(--rule);
+  background: var(--slip);
+  padding: var(--space-5);
+}
+.statusLine {
+  margin: 0;
+  color: var(--teal);
+  font-weight: var(--weight-strong);
+}
+.reason {
+  margin: var(--space-1) 0 var(--space-4);
+  font-size: var(--step-2);
+  line-height: var(--leading-tight);
+}
+.figures {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+}
+.figures dt {
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+.figures dd {
+  margin: 0;
+  font-size: var(--step-1);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-strong);
+}
+.coin {
+  color: var(--coin);
+}
+.meta {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+.resolution {
+  padding: var(--space-3);
+  background: var(--teal-soft);
+  border-radius: var(--radius-small);
+}
+.verdicts fieldset {
+  border: 0;
+  padding: 0;
+  margin: var(--space-4) 0 var(--space-3);
+  display: grid;
+  gap: var(--space-2);
+}
+.verdicts legend {
+  font-weight: var(--weight-strong);
+  margin-block-end: var(--space-2);
+}
+.verdict {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+.whyLabel {
+  display: grid;
+  gap: var(--space-1);
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+.whyLabel textarea {
+  font: inherit;
+  color: var(--ink);
+  border: var(--hairline) solid var(--rule);
+  border-radius: var(--radius-small);
+  padding: var(--space-2);
+}
+.primary {
+  margin-block-start: var(--space-3);
+  border: 0;
+  background: var(--teal);
+  color: var(--slip);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-small);
+  font-weight: var(--weight-strong);
+}
+.primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.failure {
+  color: var(--fail);
+}
+
+@media (max-width: 70rem) {
+  .view {
+    grid-template-columns: 1fr;
+  }
+  .panel {
+    grid-column: 1;
+    grid-row: auto;
+    border-inline-start: 0;
+    border-block-start: var(--hairline) solid var(--rule);
+  }
+  .body {
+    grid-template-columns: 1fr;
+    padding-inline: var(--space-4);
+  }
+  .head {
+    padding-inline: var(--space-4);
+  }
+}
