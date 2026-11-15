@@ -17,7 +17,6 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.graphql.execution.DataFetcherExceptionResolver;
-import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
 import org.springframework.graphql.execution.ErrorType;
 import org.springframework.graphql.server.WebGraphQlInterceptor;
 import graphql.GraphqlErrorBuilder;
@@ -133,7 +132,7 @@ public class Subgraph {
         /** Access errors come back as GraphQL errors the client can read, not as internal errors. */
         @Bean
         DataFetcherExceptionResolver accessErrors() {
-            return DataFetcherExceptionResolverAdapter.from((ex, env) -> {
+            return DataFetcherExceptionResolver.forSingleError((ex, env) -> {
                 if (ex instanceof Web.Forbidden || ex instanceof Web.Unauthorized) {
                     return GraphqlErrorBuilder.newError(env).errorType(ErrorType.FORBIDDEN).message(ex.getMessage())
                         .build();
